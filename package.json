@@ -1,0 +1,22 @@
+{
+  "name": "slamazon",
+  "version": "1.0.0",
+  "description": "An imaginary store-front using MySQL, slamming deals all day long.",
+  "main": "slamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HillaryBLavin/slamazon.git"
+  },
+  "author": "Hillary B. Lavin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HillaryBLavin/slamazon/issues"
+  },
+  "homepage": "https://github.com/HillaryBLavin/slamazon#readme",
+  "dependencies": {
+    "mysql": "^2.15.0"
+  }
+}
