@@ -1,5 +1,5 @@
 var mysql = require("mysql"),
-var inquire = require("inquirer");
+    inquire = require("inquirer");
 
 var connection = mysql.createConnection({
   host: "localhost",
@@ -9,7 +9,7 @@ var connection = mysql.createConnection({
   user: "root",
 
   // Your password
-  password: "backend1279",
+  password: "backend1279!",
   database: "slamazonDB"
 });
 
