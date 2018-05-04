@@ -1,5 +1,6 @@
 var mysql = require("mysql"),
-    inquire = require("inquirer");
+    inquire = require("inquirer"),
+    cliTable = require("cli-table");
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -57,6 +58,7 @@ var customerPrompt = function (res) {
                     if ((res[id].stock_quantity - ans.quantity) > 0) {
                         connection.query("UPDATE products SET stock_quantity='" + (res[id].stock_quantity - ans.quantity) + "' WHERE product_name='" + product + "'", function(err, res2) {
                             console.log("Congratulations on your purchase!");
+                            debugger;
                             makeTable();
                         })
                     } else {
