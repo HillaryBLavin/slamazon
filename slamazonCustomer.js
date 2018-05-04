@@ -34,11 +34,11 @@ var customerPrompt = function (res) {
     inquire.prompt([{
         type: 'input',
         name: 'choice',
-        message: 'Please select an item for purchase [Quit with Q]'
+        message: 'Please type the name of the item you wish to purchase [Quit with Q]'
     }]).then(function (ans) {
         var correct = false;
         for (var i = 0; i < res.length; i++) {
-            if (res[i].product_name == ans.choice) {
+            if (res[i].item_id == ans.choice) {
                 correct = true;
                 var product = ans.choice;
                 var id = i;
@@ -54,8 +54,8 @@ var customerPrompt = function (res) {
                         }
                     }
                 }).then(function(ans) {
-                    if ((res[id].stock_quantity - answer.quantity) > 0) {
-                        connection.query("UPDATE products SET stock_quantity='" + (res[id].stock_quantity - answer.quantity) + "' WHERE product_name='" + product + "'", function(err, res2) {
+                    if ((res[id].stock_quantity - ans.quantity) > 0) {
+                        connection.query("UPDATE products SET stock_quantity='" + (res[id].stock_quantity - ans.quantity) + "' WHERE product_name='" + product + "'", function(err, res2) {
                             console.log("Congratulations on your purchase!");
                             makeTable();
                         })
