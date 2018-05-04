@@ -42,6 +42,28 @@ var customerPrompt = function (res) {
                 correct = true;
                 var product = ans.choice;
                 var id = i;
+                inquire.prompt({
+                    type: 'input',
+                    name: 'quantity',
+                    message: 'How many would you like to purchase?',
+                    validate: function(val) {
+                        if (isNaN(val) == false) {
+                            return true; 
+                        } else {
+                            return false;
+                        }
+                    }
+                }).then(function(ans) {
+                    if ((res[id].stock_quantity - answer.quantity) > 0) {
+                        connection.query("UPDATE products SET stock_quantity='" + (res[id].stock_quantity - answer.quantity) + "' WHERE product_name='" + product + "'", function(err, res2) {
+                            console.log("Congratulations on your purchase!");
+                            makeTable();
+                        })
+                    } else {
+                        console.log("Not a valid selection! Please try again.");
+                        customerPrompt(res);
+                    }
+                })
             }
         }
     })
