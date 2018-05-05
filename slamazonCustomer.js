@@ -17,31 +17,40 @@ var connection = mysql.createConnection({
 connection.connect(function (err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId);
-    makeTable();
+    productTable();
     connection.end();
 });
 
-var makeTable = function () {
-    connection.query("SELECT * FROM products", function (err, res) {
-        console.log("\nWelcome to Slamazon!\n");
+var productTable = function() {
+    console.log("\n************************** Welcome to Slamazon! **************************\n");
+    connection.query("SELECT * FROM products", function(err, res) {
+        if (err) throw err;
+
+        var table = new cliTable({
+            head: ['Item #', 'Product', 'Store Department', 'Price', 'In Stock'],
+            colWidths: [10, 50, 20, 10, 10],
+        });
         for (var i = 0; i < res.length; i++) {
-            console.log(res[i].item_id + " || " + res[i].product_name + " || " + res[i].department_name + " || " + "$" + res[i].price + " || " + res[i].stock_quantity + "\n");
-        }
-        customerPrompt(res);
-    })
-}
+            table.push([
+                res[i].item_id, res[i].product_name, res[i].department_name, res[i].price, res[i].stock_quantity
+            ]);
+        };
+        console.log(table.toString());
+        customerPrompt();
+    });
+};
 
 var customerPrompt = function (res) {
     inquire.prompt([{
         type: 'input',
         name: 'choice',
         message: 'Please type the name of the item you wish to purchase [Quit with Q]'
-    }]).then(function (ans) {
+    }]).then(function (answer) {
         var correct = false;
         for (var i = 0; i < res.length; i++) {
-            if (res[i].item_id == ans.choice) {
+            if (res[i].item_id == answer.choice) {
                 correct = true;
-                var product = ans.choice;
+                var product = answer.choice;
                 var id = i;
                 inquire.prompt({
                     type: 'input',
@@ -54,12 +63,12 @@ var customerPrompt = function (res) {
                             return false;
                         }
                     }
-                }).then(function(ans) {
-                    if ((res[id].stock_quantity - ans.quantity) > 0) {
-                        connection.query("UPDATE products SET stock_quantity='" + (res[id].stock_quantity - ans.quantity) + "' WHERE product_name='" + product + "'", function(err, res2) {
+                }).then(function(answer) {
+                    if ((res[id].stock_quantity - answer.quantity) > 0) {
+                        connection.query("UPDATE products SET stock_quantity='" + (res[id].stock_quantity - answer.quantity) + "' WHERE item_id='" + product + "'", function(err, res2) {
                             console.log("Congratulations on your purchase!");
                             debugger;
-                            makeTable();
+                            productTable();
                         })
                     } else {
                         console.log("Not a valid selection! Please try again.");
