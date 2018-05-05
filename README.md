@@ -1,7 +1,11 @@
 # Welcome to Slamazon!
 ### Where we slam you with deals all day long!
 
-Slamazon is a fictional store-front created using Node.js and SQL. 
+Slamazon is a fictional store-front created using Node.js and SQL and run in your very own command line. 
+
+When you run `slamazonCustomer.js`, you'll see a table with all of Slamazon's great deals. Simply select the product you wish to purchase, and input the desired quantity. If the item is in stock, Slamazon will display the total purchase price.
+
+![Slamazon Customer Demo](/images/slamazonCustomer-demo-1.gif) 
 
 ## Getting Started
 
